@@ -1,0 +1,106 @@
+.nav-tabs>li>a {
+	color: white;
+}
+.nav-tabs>li>a:hover {
+	color: black;
+}
+.jqx-widget-content {
+    color: white;
+    font-size: initial !important;	
+    font-family: 'ProximaNovaRegular' !important; 
+}
+/* , .jqx-widget-content, .jqx-widget-header, .jqx-fill-state-normal */
+.jqx-widget {
+    background-color: rgba(0,0,0,.4);		
+}
+.jqx-popup {
+    background-color: rgba(200,0,0,.9) !important;			
+}
+#jqxgrid_admins .jqx-grid-cell-filter-row {
+	display: none;
+}
+#statusrowjqxgrid_users_all {
+	/*height: 30px !important;*/
+}
+#jqxgrid_admins .jqx-widget-header {
+	height: 31px !important;
+}
+
+.service9-opacity {
+}
+.jqx-grid-cell-selected {
+    background-color: Teal;
+}
+.jqx-grid-group-cell .jqx-grid-cell-hover .jqx-fill-state-hover { 
+	background-color: Green; 
+}
+.jqx-widget-content {
+/*    background-color:rgba(0,0,0,.1) !important; 
+    font-size: 110%;
+*/}
+.jqx-widget-header {
+    background-color: rgba(0,0,0,.4) !important;
+    color: white;
+    border-top: white solid 1px;		
+}
+.jqx-grid-content {
+	background-color: rgba(0,0,0,.2) !important;		
+	color: white
+}
+.jqx-grid-group-cell,.jqx-grid-cell {
+    background-color: rgba(0,0,0,.2) !important;		
+	color: white
+}
+.jqx-fill-state-normal {
+	background-color: transparent !important; 
+	color: white; 
+	font-weight: bold;
+}
+.jqx-grid-statusbar .jqx-fill-state-hover {
+	background-color:rgba(255,255,255,1) !important;
+}
+.jqx-grid-statusbar .jqx-fill-state-pressed {
+	background-color:rgba(255,255,255,1) !important;
+	color: black;
+}
+.jqx-fill-state-pressed {
+	color: firebrick
+}
+/* , .jqx-rc-all*/
+.jqx-listitem-element {
+	background-color:rgba(255,255,255,1);
+}
+/* , .jqx-rc-all */
+.jqx-listitem-state-normal {
+	color:black !important;
+}
+.jqx-input {
+	color:white;
+	background-color:rgba(255,255,255,.2) !important;
+}
+.jqx-menu-dropdown li {
+	color: black !important;
+}
+.jqx-fill-state-disabled {
+	background-color: #CCC; 
+	opacity: 1; 
+	color: #666 !important;
+}
+.jqx-dropdownlist-content {
+	color: white !important
+}
+.jqx-grid-cell-filter-row input {
+	color: white !important
+}
+.jqx-calendar div {
+	background-color: rgba(0,0,0,.8) !important;
+}
+.jqx-calendar-footer {
+	border: 1px solid; 
+	border-radius: 3px; 
+	background-color: grey; 
+	padding: 0 5px;
+}
+.jqx-tooltip {
+	background-color: black !important;
+}

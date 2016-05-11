@@ -1,0 +1,34 @@
+Уникальный номер реестровой записи (col1) +
+Регистрационный номер медицинского изделия (col2)
+Дата государственной регистрации медицинского изделия (col3) D
+Срок действия регистрационного удостоверения (col4)
+Наименование медицинского изделия (col5)
+Наименование организации - заявителя медицинского изделия (col6)
+Место нахождения организации-заявителя медицинского изделия (col7)
+Юридический адрес организации-заявителя медицинского изделия (col8)
+Наименование организации-производителя медицинского изделия или организации-изготовителя медицинского изделия (col9)
+Место нахождения организации-производителя медицинского изделия или организации - изготовителя медицинского изделия (col10)
+Юридический адрес организации-производителя медицинского изделия или организации - изготовителя медицинского изделия (col11)
+Код Общероссийского классификатора продукции для медицинского изделия  (col12) +
+Класс потенциального риска применения медицинского изделия в соответствии с номенклатурной классификацией медицинских изделий, утверждаемой Министерством здравоохранения Российской Федерации  (col13) +
+Назначение медицинского изделия, установленное производителем (col14)
+Вид медицинского изделия в соответствии с номенклатурной классификацией медицинских изделий, утверждаемой Министерством здравоохранения Российской Федерации (col15) +
+Адрес места производства или изготовления медицинского изделия (col16)
+Сведения о взаимозаменяемых медицинских изделиях (col17)
+
+
+Unique number of register entries (col 1)
+Registration number of the medical device (col 2)
+Date of state registration of the medical device (col3)
+The validity of the registration certificate (col4)
+Name of the medical device (col5)
+Name of the company - the applicant's medical products (col6)
+Location of the applicant organization of the medical device (col7)
+Legal address of the applicant organization of the medical device (col8) Name of the manufacturer of the medical device manufacturer or the organization of the medical device (col9)
+Location of the manufacturer of the medical device or the organization - the manufacturer of the medical device (col10)
+Legal address of the manufacturer of the medical device or the organization - the manufacturer of the medical device (col11)
+Code of Russian National Classifier of products for the medical device (col12)
+The class of potential risk of application of the medical device in accordance with the nomenclature Classification of medical devices approved by the Ministry of Health of the Russian Federation (col13)
+Appointment of a medical device, the manufacturer's (col14)
+View a medical device in accordance with the nomenclature Classification of medical devices approved by the Ministry of Health of the Russian Federation (col15)
+Address place of production or manufacture of a medical device (col16) Details of interchangeable medical products (col17)

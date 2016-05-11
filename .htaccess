@@ -1,0 +1,17 @@
+AddDefaultCharset utf-8
+RewriteEngine On
+#Options +FollowSymlinks
+#RewriteRule ^IMG$    /_images [L]
+
+#RewriteCond %{REQUEST_FILENAME} !jqxdata.js
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteCond %{REQUEST_FILENAME} !json\.php$
+#RewriteCond %{REQUEST_FILENAME} !test1.php$
+#   RewriteCond %{REQUEST_FILENAME} !.test1.php$
+#RewriteCond %{REQUEST_FILENAME} !Public/Contract/ProfitReport.php$
+#RewriteCond %{REQUEST_FILENAME} !Admin/avito$ 
+#RewriteCond %{REQUEST_FILENAME} !/$ 
+#RewriteRule ^Personal/?$ - [L]
+RewriteRule .* index.php [L]
+#RewriteRule .* temp.php [L]

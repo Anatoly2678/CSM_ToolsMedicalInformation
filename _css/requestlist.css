@@ -1,0 +1,102 @@
+@charset "utf-8";
+@import url("_fonts/Uni_Sans_Thin/stylesheet.css");
+@import url("_fonts/13160/stylesheet.css");
+@import url("_fonts/Proxima/ProximaNovaReg.css");
+
+/* Small devices (tablets, 768px and up) */
+@media screen and (min-width: 600px) and (max-width: 1000px) {
+    #aferta {
+        display: none;
+    }
+    #noAferta {
+        display: block !important;
+    }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 3000px) {
+    #aferta {
+        max-height: 340px;
+        overflow: auto;
+        font-size: 80%;
+    }
+}
+
+
+body {
+    font-family: 'ProximaNovaRegular' !important;
+    font-size: 18px;
+}
+.container {
+    margin-top: 3%;
+    width: 100%;
+    padding: 0px;
+}
+.table-request-list {
+    width: 100%;
+    color: white;
+}
+
+/*.tab-pane {
+    padding: 15px;
+}
+.form-group {
+    padding: 0px;
+    padding-right: 0px;
+}
+.form-group label {
+    background: transparent !important;
+    color: white;
+    text-transform: uppercase;
+    background-color: white;
+}
+.pager li>a {
+    background: transparent;
+}
+
+.modal-title {
+    font-style: italic;
+    text-transform: uppercase;
+    color: orangered;
+    font-size: 110%;
+}
+.panel-title span {
+    font-weight: bold;
+    color: maroon;
+}*/
+
+/*RequestList*/
+.requestlist-body {
+    background-color: rgba(0,0,0,.5);
+    color: red;
+}
+.requestlist-body div{
+    height: calc(100% - 10%);
+    overflow: auto;
+}
+
+/* Invoice */
+.invoice-align-right {
+    text-align: right;
+}
+.right-radius {
+    border-top-right-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
+}
+.left-radius {
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+}
+.invoice label {
+    box-shadow: none;
+    border: 0px;
+}
+
+.invoice .result {
+    background-color: goldenrod;
+    color: wheat;
+    font-weight: bold;
+}
+
+.invoice-hide {
+    display: none;
+}
