@@ -1,17 +1,16 @@
 AddDefaultCharset utf-8
-RewriteEngine On
-#Options +FollowSymlinks
-#RewriteRule ^IMG$    /_images [L]
+#Options -Indexes
+#deny from all
+#<Files "viewreestr">
+#AuthName 'What you name?'
+#AuthType Basic
+#AuthUserFile /home/centrutil/xn--d1aobi0a9c.xn--80aaebhf3bk2ck1h.xn--p1ai/docs/.htpasswd
+#Require user admin26 ssa353
+#</Files>
 
-#RewriteCond %{REQUEST_FILENAME} !jqxdata.js
+RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-#RewriteCond %{REQUEST_FILENAME} !json\.php$
-#RewriteCond %{REQUEST_FILENAME} !test1.php$
-#   RewriteCond %{REQUEST_FILENAME} !.test1.php$
-#RewriteCond %{REQUEST_FILENAME} !Public/Contract/ProfitReport.php$
-#RewriteCond %{REQUEST_FILENAME} !Admin/avito$ 
-#RewriteCond %{REQUEST_FILENAME} !/$ 
-#RewriteRule ^Personal/?$ - [L]
 RewriteRule .* index.php [L]
-#RewriteRule .* temp.php [L]
+
+

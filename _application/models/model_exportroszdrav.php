@@ -64,21 +64,50 @@ class model_exportroszdrav extends roszdravParsing {
 	 *  Draft Procedure
 	 */ 	
 	public function deleteDuplicate() {
-		/*
-		 * 	-- Создание копии таблицы без дубликатов во временной таблице
-			CREATE TEMPORARY TABLE bad_temp AS SELECT DISTINCT col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12, col13, col14, col15, col16, col17 FROM reestr;
-			-- Удаление всех записей из старой таблицы
-			DELETE FROM reestr;
-			-- Добавление записей без дублей
-			INSERT INTO reestr SELECT *, NOW() FROM bad_temp;
-			-- Удаление временной таблицы
-			DROP TABLE bad_temp;
-		 */
 		$sql = "DELETE FROM reestr_distinct";
 		$this->query_data($sql);
-		$sql = "INSERT INTO reestr_distinct SELECT DISTINCT col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12, col13, col14, col15, col16, col17, now() FROM reestr";
+		$sql = "INSERT INTO reestr_distinct SELECT DISTINCT col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12, col13, col14, col15, col16, col17, now(),NULL FROM reestr";
 		$this->query_data($sql);
 		return 0;
+	}
+
+	public  function updatecol4_data() {
+//		$this->connect();
+		 $sql="select rd.col1,rd.col4 from reestr_distinct rd where rd.col4 <> 'Бессрочно' ORDER BY rd.col1"; // limit 40
+
+//		print_r($sql);
+//		die ();
+		$result = $this->get_data($sql);
+//		$rows = $result->fetch_array();
+		$col4="";
+		$col1="";
+		$stmt = parent::$mysqliPublic->stmt_init();
+		if (!($stmt = parent::$mysqliPublic->prepare("UPDATE `" . TableReestrDistinct. "` SET col4_data= (?) WHERE col1=(?)"))) {
+			echo "Не удалось подготовить запрос: (" . parent::$mysqliPublic->errno . ") " . parent::$mysqliPublic->error;
+		}
+		if (!$stmt->bind_param("ss", $col4, $col1)) {
+			echo "Не удалось привязать параметры: (" . $stmt->errno . ") " . $stmt->error;
+		}
+		while($row = $result->fetch_array()) {
+			$cur_data=$this->StringToDate($row[col4]);
+			$col1=$row[col1];
+			$col4=$cur_data;
+			if ($cur_data != 'NULL') {
+				$stmt->execute();
+				echo(sprintf("%s -> %s = '%s'", $row[col1], $row[col4], $col4));
+				echo "<br>";
+			}
+		}
+//		$this->close();
+	}
+
+	private  function  StringToDate($str) {
+		$str=preg_replace("/(.*)(\d{2}\.\d{2}\.\d{4})/", "$2", $str);
+//		print_r($str);
+		$ret_val=date("Y-m-d", strtotime($str));
+		if ($ret_val == '1970-01-01') {$ret_val='NULL';}
+//		echo ($ret_val);
+		return $ret_val;
 	}
 }
 ?>

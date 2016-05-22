@@ -78,5 +78,16 @@ COLLATE utf8_general_ci;";
             echo 'Ошибка при создании таблицы: <i>' . $link->error . "</i><br>";
         }
     }
+    
+    public  function  alterTableDistinct() {
+        $link = new mysqli(Host, User, Password,DB);
+        if (!$link) { die('Ошибка соединения: ' . $link->error); }
+        $sql = "ALTER TABLE `".DB."`.`".TableReestrDistinct."` ADD `col4_data` date DEFAULT NULL COMMENT 'Срок действия РУ (дата)' ";
+        if ($link->query($sql)) {
+            echo "Таблица ".TableReestrDistinct." успешно обновлена<br>";
+        } else {
+            echo "Ошибка при обновлении таблицы: <i>" . $link->error . "</i><br>";
+        }
+    }
 
 }

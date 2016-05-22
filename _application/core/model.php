@@ -36,10 +36,24 @@ class Model
  	if (!$result =self::$mysqliPublic->query($sql,$param)) { echo "Error GET record: " . self::$mysqliPublic->error."<br>"; };
  	return $result;
 	}
+	
+	public  function nobuffquery ($sql) {
+		self::$mysqliPublic->use_result($sql);
+		$result = self::$mysqliPublic->use_result();
+		//if (!$result =self::$mysqliPublic->real_query($sql)) { echo "Error GET record: " . self::$mysqliPublic->error."<br>"; }
+		//else {$result = self::$mysqliPublic-->use_result();};
+		return $result;
+	}  
+	// $mysqli->real_query('текст запроса');
 
 	// метод выборки данных
 	public function get_data_real($sql=null) {
- 	if (!$result =self::$mysqliPublic->real_query($sql)) { echo "Error GET record: " . self::$mysqliPublic->error."<br>"; };
+		if (!self::$mysqliPublic->set_charset("utf8")) {
+			printf("Ошибка при загрузке набора символов utf8: %s\n", self::$mysqliPublic->error);
+		} else {
+//			printf("Текущий набор символов: %s\n", self::$mysqliPublic->character_set_name());
+		}
+		if (!$result =self::$mysqliPublic->real_query($sql)) { echo "Error GET record: " . self::$mysqliPublic->error."<br>"; };
  	return $result;
 	}
 

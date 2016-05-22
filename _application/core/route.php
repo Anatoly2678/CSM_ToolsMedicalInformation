@@ -24,7 +24,11 @@ class Route
 		{
 			$action_name = explode('?', $routes[2])[0];
 		}
-
+		if (!empty($url)) {
+			$controller_name = $url;
+			$action_name = 'index';
+			chdir('..');
+		}
 		// добавляем префиксы
 		$model_name = 'Model_'.$controller_name;
 		$controller_name = 'Controller_'.$controller_name;

@@ -14,10 +14,23 @@ var _OpisName = function (index, datafield, value, defaultvalue, column, rowdata
     return return_opis;
 }
 
+var _Mark = function (index, datafield, value, defaultvalue, column, rowdata) {
+    var today = new Date();
+    var col4_date = new Date(rowdata.col4);
+    var element = $(defaultvalue);
+    console.log(element);
+    console.info(element[0]);
+    console.info(element[0].outerHTML);
+    var ret_element= element[0].outerHTML;
+    if (today > col4_date) {
+        element.css({ 'background-color': 'coral', 'margin-top': '1px','width':'100%','color':'white' });
+        ret_element= element[0].outerHTML;
+    }
+    return ret_element;
+};
+
 var complaintTypes = new Array();
 var complaintTypesFiltergroup = new $.jqx.filter();
-
-console.log(complaintTypes);
 
 $(document).ready(function () {
     var source =
@@ -27,7 +40,7 @@ $(document).ready(function () {
             { name: 'col1', type: 'string' },
             { name: 'col2', type: 'string' },
             { name: 'col3', type: 'date', map: 'col3' },
-            { name: 'col4', type: 'string' },
+            { name: 'col4', type: 'date' },
             { name: 'col5', type: 'string' },
             { name: 'col6', type: 'string' },
             { name: 'col7', type: 'string' },
@@ -58,7 +71,26 @@ $(document).ready(function () {
             $("#jqxgrid_reestr").jqxGrid('updatebounddata', 'sort');
         },
     };
-    var dataAdapter = new $.jqx.dataAdapter(source);
+    // var dataAdapter = new $.jqx.dataAdapter(source);
+
+
+
+    var mysettings
+    var dataAdapter = new $.jqx.dataAdapter(source, {
+        downloadComplete: function(data, status, xhr) {
+            if (!source.totalRecords) {
+                source.totalRecords = data.length;
+            }
+        },
+        loadError: function(xhr, status, error) {
+            throw new Error(error);
+        },
+        // beforeSend(jqXHR, settings) {
+        //     mysettings = settings;
+        // }
+    });
+
+
     $("#jqxgrid_reestr").jqxGrid({
          width: '100%',
          height: '95%',
@@ -82,12 +114,12 @@ $(document).ready(function () {
              return obj.data;
          },
          columns: [
-             { text: 'Уникальный номер реестровой записи', datafield: 'col1', align: 'center', cellsalign: 'center', width:'5%'},
+             { text: 'Уникальный номер реестровой записи', datafield: 'col1', align: 'center', cellsalign: 'center', width:'5%',cellsrenderer:_Mark},
              { text: 'Регистрационный номер медицинского изделия', datafield: 'col2', align: 'center', cellsalign: 'center', width:'10%'},
              { text: 'Дата государственной регистрации медицинского изделия', datafield: 'col3', align: 'center', cellsalign: 'center', width:'10%',cellsformat: 'dd.MM.yyyy'
                  , filtertype: 'range'},
              { text: 'Срок действия регистрационного удостоверения', datafield: 'col4', align: 'center', cellsalign: 'center', width:'10%',filtertype: 'list',
-               filteritems: ['Бессрочно','Только действующие','Отменено','С датами'], filtercondition: 'starts with' },
+               filteritems: ['Бессрочно','Только действующие','Отменено','С датами'], filtercondition: 'starts with',cellsformat: 'dd.MM.yyyy' },
              { text: 'Наименование медицинского изделия', datafield: 'col5', align: 'center', cellsalign: 'center', width:'40%',cellsrenderer: _OpisName}, //
              { text: 'Наименование организации - заявителя медицинского изделия', datafield: 'col6', align: 'center', cellsalign: 'center', width:'20%'},
              { text: 'Место нахождения организации-заявителя медицинского изделия', datafield: 'col7', align: 'center', cellsalign: 'center', width:'20%'},
@@ -108,7 +140,14 @@ $(document).ready(function () {
     });
     $("#excelExport").jqxButton();
     $("#excelExport").click(function () {
-        $("#jqxgrid_reestr").jqxGrid('exportdata', 'xls', 'jqxGrid');
+        var myurl=mysettings.url+'&export=excel';
+        var pos = myurl.indexOf('filterscount=0');
+        if('-1' != pos) {
+            alert ("Экспорт слишком большой? невозможно! \r\n Добавьте фильтры");
+        } else {
+        $("#jqxgrid_reestr").jqxGrid('exportdata', 'xls', 'jqxGrid', true, null, true, myurl);
+        }
+        return false;
     });
     $("#jqxgrid_reestr").jqxGrid('autoresizecolumns');
     $('#jqxgrid_reestr').jqxGrid({ pagerbuttonscount: 15});

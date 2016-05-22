@@ -1,0 +1,20 @@
+#AuthUserFile /usr/local/cixnet/users/m/a/magsoft/.htpasswd
+#AuthName Paid Member
+#AuthType Basic
+
+#<Limit GET POST>
+#require valid-user
+#</Limit>
+#<Files controller_viewreestr.php>
+#<Directory /viewreestr>
+#AuthName 'What you name?'
+#AuthType Basic
+#AuthUserFile .htpasswd
+#Require user admin26
+#</Directory>
+#AuthUserFile /home/c/cq88477/.authfile
+#</Files>
+#AuthName "What you name?"
+#AuthType Basic
+#require valid-user
+#Require user "user"

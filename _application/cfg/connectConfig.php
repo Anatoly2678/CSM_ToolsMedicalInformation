@@ -1,10 +1,9 @@
 <?php
 error_reporting(E_ERROR); // | E_WARNING | E_PARSE
-define('User', 'root');
-define('Password', '');
-define('Host', 'localhost');
-define('DB', 'csm');
+define('User', 'root'); //centrutil_mysql
+define('Password', ''); //tOL6NsC+
+define('Host', 'localhost'); //centrutil.mysql
+define('DB', 'csm'); //centrutil_csm
 define('TableReestr', 'reestr');
-//$SQLConnect = array('Host' =>'localhost' ,'User' =>'root','Password' =>'','DB' =>'stroydom' );
-
+define('TableReestrDistinct', 'reestr_distinct');
 ?>

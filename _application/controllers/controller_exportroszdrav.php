@@ -4,6 +4,21 @@ class Controller_exportroszdrav extends Controller {
 		$this->model = new model_exportroszdrav();
 	}
 
+	function  action_02day() {
+		$date = new DateTime();
+		$d2=$date->format('d.m.Y');
+		$d1=$date->modify('-2 day')->format('d.m.Y');
+		$params = array(
+			"dt_ru_from" => $d1,
+			"dt_ru_to" => $d2,
+			"start" => 0,
+			"length" => 1000000//,
+		);
+		var_dump($params);
+		$arrJSON = $this->model->loadExportRoszdrav($params);
+		$this->model->insertToTable($arrJSON);
+	}
+
 	function  action_index() {
 		$date = new DateTime();
 		$d2=$date->format('d.m.Y');
@@ -85,9 +100,9 @@ class Controller_exportroszdrav extends Controller {
 		$y=1989;
 		while ($y<2016) {
 			$y ++;
-			$m = 2;
+			$m = 0;
 			$delta = 1;
-			while ($m < 3) {
+			while ($m < 12) {
 				$m++; // Увеличение счетчика
 				$n = ($m + $delta);
 				echo $m;
@@ -114,13 +129,25 @@ class Controller_exportroszdrav extends Controller {
 		die ();
 	}
 
+	function  action_alterdistinct() {
+		$this->model->alterTableDistinct();
+		die ();
+	}
+
 	function action_distinctrecord() {
 		echo "убираем дублирующие записи<br>";
 		$this->model->connect();
 		$this->model->deleteDuplicate();
+		echo "таблица с уникальными записями успешно сохранена<br>";
+		$this->model->updatecol4_data();
+		echo "даты преобразованы";
 		$this->model->close();
-		echo "таблица с уникальными записями успешно сохранена";
 	}
+
+	function  action_updatecol4() {
+		$this->model->updatecol4_data();
+	}
+
 
 }
 
