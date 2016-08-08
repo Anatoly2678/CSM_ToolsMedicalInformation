@@ -14,14 +14,12 @@ class Route
 		$routes = explode('/', $_SERVER['REQUEST_URI']);
 
 		// получаем имя контроллера
-		if ( !empty($routes[1]) && $routes[1] !='index.php')
-		{	
+		if ( !empty($routes[1]) && $routes[1] !='index.php') {
 			$controller_name = $routes[1];
 		}
 		
 		// получаем имя экшена
-		if ( !empty($routes[2]) )
-		{
+		if ( !empty($routes[2]) ) {
 			$action_name = explode('?', $routes[2])[0];
 		}
 		if (!empty($url)) {
@@ -37,8 +35,7 @@ class Route
 		// подцепляем файл с классом модели (файла модели может и не быть)
 		$model_file = strtolower($model_name).'.php';
 		$model_path = "_application/models/".$model_file;
-		if(file_exists($model_path))
-		{
+		if(file_exists($model_path)) {
 			include "_application/models/".$model_file;
 		}
 
@@ -46,12 +43,9 @@ class Route
 		$controller_file = strtolower($controller_name).'.php';
 		$controller_path = "_application/controllers/".$controller_file;
 
-		if(file_exists($controller_path))
-		{
+		if(file_exists($controller_path)) {
 			include "_application/controllers/".$controller_file;
-		}
-		else
-		{
+		} else {
 //			echo ('Error подцепляем файл с классом контроллера');
 			/*
 			правильно было бы кинуть здесь исключение,
@@ -64,22 +58,17 @@ class Route
 		$controller = new $controller_name;
 		$action = $action_name;
 		
-		if(method_exists($controller, $action))
-		{
+		if(method_exists($controller, $action)) {
 			// вызываем действие контроллера
 			$controller->$action();
-		}
-		else
-		{
+		} else {
 //			echo ('Error создаем контроллер');
 			// здесь также разумнее было бы кинуть исключение
 			Route::ErrorPage404();
 		}
-	
 	}
 
-	function ErrorPage404()
-	{
+	function ErrorPage404()	{
         $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
         header('HTTP/1.1 404 Not Found');
 		header("Status: 404 Not Found");

@@ -1,0 +1,16 @@
+th.ui-th-column div{
+    white-space:normal !important;
+    height:auto !important;
+    padding:2px;
+}
+.ui-jqgrid .ui-jqgrid-resize {height:100% !important;}
+.ui-jqgrid tr.ui-row-ltr td { white-space:normal !important; }
+.ui-jqgrid tr.ui-row-ltr td div{ white-space:normal !important; }
+.ui-jqgrid tr.jqgrow td { white-space: normal !important; }
+.ui-widget-content td div { white-space: normal !important; }
+
+.ui-jqgrid-htable, .ui-jqgrid-btable, .ui-search-table, .ui-pg-table {
+    font-size: 11px;
+}
+.cms-form {padding: 5px 0;}
+body { padding-top: 50px;     background-color: rgba(0, 120, 201, 0.2);  }

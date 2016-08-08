@@ -1,0 +1,56 @@
+body {
+	background-color: rgba(0, 120, 201, 0.2);  
+	padding-top: 50px;
+}
+
+.menu {
+	/*padding: 0px;*/
+}
+
+.menu .nav a:hover {
+	color: red !important;
+	text-decoration: underline;
+}
+
+.logo {
+	padding: 10px;
+}
+
+.logo img {
+	width: 100px;
+}
+
+#page .center-block {
+	text-align: center;
+}
+
+
+
+
+
+
+
+
+#page1 {
+	height: 400px;
+}
+
+#page2 {
+	height: 300px;
+	background-color: white;
+}
+
+#page3 {
+	height: 400px;
+	background-color: #1793FF;
+}
+
+#page4 {
+	height: 400px;
+	background-color: #93FA91;
+}
+
+#page5 {
+	background-color: #F1DBFF;
+	height: 200px;
+}

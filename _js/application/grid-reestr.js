@@ -1,16 +1,20 @@
 /**/
 var _OpisName = function (index, datafield, value, defaultvalue, column, rowdata){
-    var re = new RegExp("[a-z\d-]+|[а-яё\d-]+", "gi");
-    var myArray = rowdata.col5.match(re);
-    var resultStr='';
-    var length = 10;
-    if (myArray.length<10) {
-        length=myArray.length;
+    if (value != '') {
+        var re = new RegExp("[a-z\d-]+|[а-яё\d-]+", "gi");
+        var myArray = rowdata.col5.match(re);
+        var resultStr = '';
+        var length = 10;
+        if (myArray.length < 10) {
+            length = myArray.length;
+        }
+        for (i = 0; i < length; i++) {
+            resultStr = resultStr + myArray[i] + ' ';
+        }
+        return_opis = '<span style="white-space: normal;" title="' + rowdata.col5 + '">' + resultStr + '</span>';
+    } else {
+        return_opis='';
     }
-    for ( i = 0; i < length; i++ ) {
-        resultStr=resultStr+ myArray[i]+' ';
-    }
-    return_opis = '<span style="white-space: normal;" title="'+rowdata.col5+'">'+resultStr+'</span>';
     return return_opis;
 }
 
@@ -18,9 +22,9 @@ var _Mark = function (index, datafield, value, defaultvalue, column, rowdata) {
     var today = new Date();
     var col4_date = new Date(rowdata.col4);
     var element = $(defaultvalue);
-    console.log(element);
-    console.info(element[0]);
-    console.info(element[0].outerHTML);
+    // console.log(element);
+    // console.info(element[0]);
+    // console.info(element[0].outerHTML);
     var ret_element= element[0].outerHTML;
     if (today > col4_date) {
         element.css({ 'background-color': 'coral', 'margin-top': '1px','width':'100%','color':'white' });
@@ -114,13 +118,13 @@ $(document).ready(function () {
              return obj.data;
          },
          columns: [
-             { text: 'Уникальный номер реестровой записи', datafield: 'col1', align: 'center', cellsalign: 'center', width:'5%',cellsrenderer:_Mark},
+             { text: 'Уникальный номер реестровой записи', datafield: 'col1', align: 'center', cellsalign: 'center', width:'5%'}, //,cellsrenderer:_Mark
              { text: 'Регистрационный номер медицинского изделия', datafield: 'col2', align: 'center', cellsalign: 'center', width:'10%'},
              { text: 'Дата государственной регистрации медицинского изделия', datafield: 'col3', align: 'center', cellsalign: 'center', width:'10%',cellsformat: 'dd.MM.yyyy'
                  , filtertype: 'range'},
              { text: 'Срок действия регистрационного удостоверения', datafield: 'col4', align: 'center', cellsalign: 'center', width:'10%',filtertype: 'list',
                filteritems: ['Бессрочно','Только действующие','Отменено','С датами'], filtercondition: 'starts with',cellsformat: 'dd.MM.yyyy' },
-             { text: 'Наименование медицинского изделия', datafield: 'col5', align: 'center', cellsalign: 'center', width:'40%',cellsrenderer: _OpisName}, //
+             { text: 'Наименование медицинского изделия', datafield: 'col5', align: 'center', cellsalign: 'left', width:'40%'}, // ,cellsrenderer: _OpisName
              { text: 'Наименование организации - заявителя медицинского изделия', datafield: 'col6', align: 'center', cellsalign: 'center', width:'20%'},
              { text: 'Место нахождения организации-заявителя медицинского изделия', datafield: 'col7', align: 'center', cellsalign: 'center', width:'20%'},
              { text: 'Юридический адрес организации-заявителя медицинского изделия', datafield: 'col8', align: 'center', cellsalign: 'center', width:'20%'},
@@ -149,6 +153,6 @@ $(document).ready(function () {
         }
         return false;
     });
-    $("#jqxgrid_reestr").jqxGrid('autoresizecolumns');
-    $('#jqxgrid_reestr').jqxGrid({ pagerbuttonscount: 15});
+ //   $("#jqxgrid_reestr").jqxGrid('autoresizecolumns');
+ //    $('#jqxgrid_reestr').jqxGrid({ pagerbuttonscount: 15});
  })

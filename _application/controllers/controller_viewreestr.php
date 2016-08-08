@@ -5,22 +5,16 @@ header("Cache-Control: no-cache, must-revalidate");
 header("Pragma: no-cache");
 apache_response_headers();
 
-class Controller_viewreestr extends Controller
-{
-		function __construct()
-	{
-//		$this->model = new model_test();
-		 $this->view = new View();
+class Controller_viewreestr extends Controller {
+	function __construct() {
+		$this->view = new View();
 	}
-	
-	function action_index()
-	{
-//            $this->model->get_data();
-//		console.log (1111);
-            $this->view->generate('cms_reestr.php', 'cms_template.php'); //
+	function action_index() {
+		$this->view->generate('listReestr.php', 'cms_template.php'); //
 	}
 
+	function action_filter() {
+		$this->view->generate('listReestr.php', 'cms_template.php',$_GET); //
+	}
 }
-
-
 ?>

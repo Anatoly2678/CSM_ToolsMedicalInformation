@@ -2,54 +2,45 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>ООО «ЦСМ»</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/_js/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/_js/bootstrap/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="/_css/smoothness/jquery-ui.min.css">
+        <link rel="stylesheet" type="text/css" href="/_css/smoothness/jquery-ui.structure.min.css">
+        <link rel="stylesheet" type="text/css" href="/_css/smoothness/jquery-ui.theme.min.css">
+        <link rel="stylesheet" type="text/css" href="/JGrid/ui.jqgrid.css">
+        <link rel="stylesheet" type="text/css" href="/_application/_css/cms_jview.css">
+        
+        <script type="text/javascript" src="/_js/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="/JGrid/grid.locale-ru.js"></script>
+        <script type="text/javascript" src="/JGrid/jquery.jqGrid.js"></script>
+        <script type="text/javascript" src="/JGrid/jquery-ui-1.9.2.custom.min.js"></script>
+        <script type="text/javascript" src="/JGrid/jquery.ui.datepicker.js"></script>
+        <script type="text/javascript" src="/JGrid/jquery.ui.datepicker-ru.js"></script>
+        <script type="text/javascript" src="/_js/bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <div class="section" id="section-0">
-            <div class="container">
-                <div class="container__row">
-                    <div class="block block-type-info block-state-standalone block-id-global-mainform" id="main-block-reestr">
-                        <div class="block-content">
-                            <?php include '_application/views/'.$content_view; ?>
-                        </div>
-                    </div>
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div class="container">
+                    <ul class="nav nav-pills">
+                        <li id="m-viewreestr"><a href="/viewreestr">ГОС РЕЕСТР МИ</a></li>
+                        <li id="m-refbook"><a href="/refbook">НОМЕНКЛАТУРА МИ ПО ВИДАМ</a></li>
+                        <li id="m-report"><a href="/report">ОТЧЕТЫ</a></li>
+                        <li id="m-remove-col" style="display: none">
+                            <div class="btn-group" style="margin-top: 5px">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Удаленные столбцы <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu remove-col">
+                                    <li role="separator" class="divider"></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
+            </nav>
+            <div class="container-fluid">
+                <?php include '_application/views/'.$content_view; ?>
             </div>
-        </div>
     </body>
-    <script type="text/javascript" src="/_js/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="/_js/jqxcore.js"></script>
-    <script type="text/javascript" src="/_js/jqxdata.js"></script>
-    <script type="text/javascript" src="/_js/jqxbuttons.js"></script>
-    <script type="text/javascript" src="/_js/jqxscrollbar.js"></script>
-    <script type="text/javascript" src="/_js/jqxlistbox.js"></script>
-    <script type="text/javascript" src="/_js/jqxdropdownlist.js"></script>
-    <script type="text/javascript" src="/_js/jqxmenu.js"></script>
-    <script type="text/javascript" src="/_js/jqxgrid.js"></script>
-    <script type="text/javascript" src="/_js/jqxgrid.pager.js"></script>
-    <script type="text/javascript" src="/_js/jqxgrid.sort.js"></script>
-    <script type="text/javascript" src="/_js/jqxgrid.filter.js"></script>
-    <script type="text/javascript" src="/_js/jqxgrid.columnsresize.js"></script>
-    <script type="text/javascript" src="/_js/jqxgrid.aggregates.js"></script>
-    <script type="text/javascript" src="/_js/jqxgrid.grouping.js"></script>
-    <script type="text/javascript" src="/_js/jqxgrid.selection.js"></script>
-    <script type="text/javascript" src="/_js/jqxdata.export.js"></script>
-    <script type="text/javascript" src="/_js/jqxgrid.export.js"></script>
-    <script type="text/javascript" src="/_js/jqxcheckbox.js"></script>
-    <script type="text/javascript" src="/_js/globalization/globalize.js"></script>
-    <script type="text/javascript" src="/_js/localization.js"></script>
-    <script type="text/javascript" src="/_js/jqwidgets/jqxcalendar.js"></script>
-    <script type="text/javascript" src="/_js/jqwidgets/jqxdatetimeinput.js"></script>
-    <script type="text/javascript" src="/_js/application/grid-reestr.js"></script>
-    <link rel="stylesheet" href="/_css/jqx.base.css" type="text/css" />
-    <style>
-        .jqx-grid-column-header div div {
-            margin-top: 5px !important;
-            white-space: normal;
-        }
-        .jqx-widget-content {
-            font-size: 10px !important;
-        }
-        #bottomRight {opacity: 0;}
-        body {overflow: hidden;}
-    </style>
 </html>

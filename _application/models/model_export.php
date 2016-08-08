@@ -7,15 +7,11 @@
  */
 
 class roszdravParsing extends Model{
-    private static $parsURL = 'http://www.roszdravnadzor.ru/ajax/services/misearch';
+    public static $parsURL = 'http://www.roszdravnadzor.ru/ajax/services/misearch';
    
     protected  function loadJSON ($params) {
         $url=self::$parsURL;
-        $postData = '';
-        foreach($params as $k => $v) {
-            $postData .= $k . '='.$v.'&';
-        }
-        $postData = rtrim($postData, '&');
+        $postData = http_build_query($params);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
@@ -87,6 +83,30 @@ COLLATE utf8_general_ci;";
             echo "Таблица ".TableReestrDistinct." успешно обновлена<br>";
         } else {
             echo "Ошибка при обновлении таблицы: <i>" . $link->error . "</i><br>";
+        }
+    }
+
+    public  function  CreateSectionforMI() {
+        $link = new mysqli(Host, User, Password,DB);
+        if (!$link) { die('Ошибка соединения: ' . $link->error); }
+        $sql="CREATE TABLE mi_section ( id int(11) NOT NULL DEFAULT 0 COMMENT 'Идентификатор', SectionName varchar(50) NOT NULL COMMENT 'Наименование номенклатуры',";
+        $sql .= " ParentId int(11) NOT NULL DEFAULT 0 COMMENT 'ИД родителя', PRIMARY KEY (id, ParentId)) ENGINE = INNODB AVG_ROW_LENGTH = 198 CHARACTER SET utf8";
+        $sql .=" COLLATE utf8_general_ci COMMENT = 'Раздел Номенклатуры';";
+        if ($link->query($sql)) {
+            echo "Таблица mi_section успешно создана<br>";
+        } else {
+            echo "Ошибка при создании таблицы: <i>" . $link->error . "</i><br>";
+        }
+
+        $sql="CREATE TABLE mi_reestr_section ( id int(11) NOT NULL AUTO_INCREMENT, col1 varchar(100) NOT NULL COMMENT 'Код', col2 text DEFAULT NULL COMMENT 'Раздел',";
+        $sql .=" col2_section int(2) DEFAULT NULL COMMENT 'Основной раздел',  col2_subsection int(2) DEFAULT NULL COMMENT 'Дополнительный раздел',";
+        $sql .=" col3 text DEFAULT NULL COMMENT 'Наименование',  col4 longtext DEFAULT NULL COMMENT 'Описание',  PRIMARY KEY (id))";
+        $sql .= " ENGINE = INNODB AUTO_INCREMENT = 98302 AVG_ROW_LENGTH = 1288 CHARACTER SET utf8 COLLATE utf8_general_ci";
+        $sql .=" COMMENT = 'НОМЕНКЛАТУРНАЯ КЛАССИФИКАЦИЯ МЕДИЦИНСКИХ ИЗДЕЛИЙ ПО ВИДАМ (Разделены разделы)';";
+        if ($link->query($sql)) {
+            echo "Таблица mi_reestr_section успешно создана<br>";
+        } else {
+            echo "Ошибка при создании таблицы: <i>" . $link->error . "</i><br>";
         }
     }
 

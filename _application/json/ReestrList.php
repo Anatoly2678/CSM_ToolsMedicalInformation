@@ -1,5 +1,6 @@
 <?php
 include "../cfg/connectConfig.php";
+header("Content-type: text/json;charset=utf-8");
 $mysqli = new mysqli(Host, User, Password, DB);
 if (mysqli_connect_errno()) { echo "Подключение невозможно: ".mysqli_connect_error(); }
 $mysqli->set_charset("utf8");
@@ -13,12 +14,15 @@ $sortdata=$_GET['sortdatafield'];
 $sortorder=$_GET['sortorder'];
 $export=$_GET['export'];
 if ($export =='excel') {
-	header("Content-type: application/vnd-ms-excel");
-	header("Content-Disposition: attachment; filename=medvistavka-export.xls");
+//	header("Content-type: application/vnd-ms-excel");
+//	header("Content-Disposition: attachment; filename=medvistavka-export.xls");
 }
 
 $order='';
-if ($sortdata) {$order='ORDER BY r.'.$sortdata.' '.$sortorder;}
+if ($sortdata) {
+	if ($sortdata == 'col4') {$sortdata='col4_data';}
+	$order='ORDER BY r.'.$sortdata.' '.$sortorder;
+}
 $where='';
 $start = $pagenum * $pagesize;
 if ($filterscount>0) {
@@ -99,9 +103,9 @@ r.col11, r.col12, r.col13, r.col14, r.col15,  r.col16,  r.col17 FROM reestr_dist
 $sql = "SELECT FOUND_ROWS() AS `found_rows`;";
 if (!$result =$mysqli->query($query)) { echo "Error GET record: " . $mysqli->error."<br>"; };
 if (!$rows =$mysqli->query($sql)) { echo "Error GET record: " . $mysqli->error."<br>"; };
-$rows=$rows->fetch_array();
+$rows=$rows->fetch_assoc();
 $total_rows = $rows['found_rows'];
-while($row = $result->fetch_array()) {
+while($row = $result->fetch_assoc()) {
 	$customers[] = $row;
 }
 $data[] = array(
