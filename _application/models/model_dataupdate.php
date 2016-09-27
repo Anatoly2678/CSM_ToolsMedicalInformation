@@ -5,7 +5,38 @@
  * Date: 04.07.2016
  * Time: 21:16
  */
-class model_dataupdate extends Model {
+class model_dataupdate extends Search {
+
+    /** Set shot MI values in SQL table.
+    * Read full MI values in SQL table, when
+    * update shot MI values in other col table
+    */
+    public function setShotMIValues() {
+        $sql="SELECT col1, col5, col5_shot FROM reestr_distinct WHERE col5_shot IS null or col5_shot =''";
+        $result = $this->get_data($sql);
+        while ($row = $result->fetch_assoc()) {
+            $resShot=addslashes($this->get10words($row[col5]));
+            $id=$row[col1];
+            $sqlU="UPDATE reestr_distinct SET col5_shot = '$resShot' WHERE col1='$id'";
+            $this->get_data($sqlU);
+        }
+    }
+
+    /** Cuts offer to 10 words
+    * $txt - offer
+    * $len - len cut (10 default)
+    */
+    private function get10words($txt,$len=10) {
+        $txt = str_ireplace(array("\r","\n",'\r','\n'),' ', $txt);
+        $arr_str = explode(" ", $txt);
+        $arr = array_slice($arr_str, 0, $len);
+        $new_str = implode(" ", $arr);
+        if (count($arr_str) > $len) {
+            $new_str .= ' ......';
+        }
+        return $new_str;
+    }
+
 
     /** Get Section MI and Split on Section from table "mi_reestr"
      * and Insert distinct record section in table "mi_section"
@@ -205,6 +236,40 @@ public function MergeArray($Myarray) {
     }
     return($result2);
 }
+
+
+    public function miReestrTransalte() {
+        $sql="UPDATE mi_reestr_section SET col3_translate = NULL,col3_soundex = NULL,col3_metaphone = NULL,col3_first_word = NULL";
+        $this->get_data($sql);
+        $arr=array();
+            $sql="SELECT id, col1, col2, col3, col4 FROM mi_reestr_section WHERE col3_soundex IS NULL OR col3_soundex =''"; // LIMIT 10000
+        print_r($sql);
+        echo "<hr>";
+        $result = $this->get_data($sql);
+        while($row = $result->fetch_assoc()) {
+            $id=$row[id];
+            preg_match_all("/(.*)(,|для)/Usi", $row[col3], $col3a);
+            if ($col3a[0]) {
+                $col3a=$col3a[1][0];
+            } else {
+                $col3a=$row[col3];
+            }
+            $col3a=addslashes($col3a);
+            $trans=$this->translit($col3a);
+            echo "<hr>";
+            $firstWord=$col3a;
+            $metaphone=metaphone($trans);
+            $sound=soundex($trans);
+            $trans=addslashes($trans);
+            // ^(\S+)\s+(\S+) - взять 2 слова с предложения
+            $arr[]=array($row[col1]=>array($row[col3],$trans,$sound));
+            $sqlupdate="UPDATE mi_reestr_section SET col3_translate = '$trans',col3_soundex = '$sound', col3_metaphone='$metaphone',col3_first_word='$firstWord' WHERE id = $id;";
+            $this->get_data($sqlupdate);
+            print_r($sqlupdate);
+            echo "<br>";
+        }
+        return 0;
+    }
 
 }
 
@@ -433,7 +498,6 @@ class test_search extends model_search {
         }
         return $retString;
     }
-
 
 
 }

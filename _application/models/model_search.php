@@ -5,6 +5,74 @@
  * Date: 15.07.2016
  * Time: 22:04
  */
+
+class model_fullSearch extends Search {
+    public function echoTest() {
+        print_r("echoTEST");
+    }
+
+    public function search() {
+        header("Content-type: text/json;charset=utf-8");
+        $page = $_REQUEST['page']; // get the requested page
+        $oper = $_REQUEST['oper']; // get the requested page
+        $limit = $_REQUEST['rows']; // get how many rows we want to have into the grid
+        $sidx = $_REQUEST['sidx']; // get index row - i.e. user click to sort
+        $sord = $_REQUEST['sord']; // get the direction
+        $_search = $_REQUEST['_search'];// — Булево значение, если запрос с условием поиска оно принимает истинное значение;
+        $filter=$this->generateAgainstString($_REQUEST['searchAll']);
+        $sqlDB="";
+        if(!$sidx) $sidx =1;
+        $totalrows = isset($_REQUEST['totalrows']) ? $_REQUEST['totalrows']: false;
+        if($totalrows) {
+            $limit = $totalrows;
+        }
+        $this->connect();
+        // Get Count Records
+        $countSQL="SELECT COUNT(*) count FROM ". TableReestrDistinct." WHERE MATCH (col2,col5,col9, col10) AGAINST ('$filter' IN BOOLEAN MODE)";
+        $result = $this->get_data($countSQL);
+        $row = $result->fetch_assoc();
+        $count = $row['count'];
+        if( $count >0 ) {
+            $total_pages = ceil($count/$limit);
+        } else {
+            $total_pages = 0;
+        }
+        if ($page > $total_pages) $page=$total_pages;
+        if ($limit<0) $limit = 0;
+        $start = $limit*$page - $limit; // do not put $limit*($page - 1)
+        if ($start<0) $start = 0;
+
+        $query = "SELECT r.col1, r.col2,  r.col3, r.col4_state, r.col4, r.col4_data, r.col5_shot col5, r.col6, r.col7, r.col8, r.col9, r.col10, 
+          r.col11, r.col12, r.col13, r.col14, r.col15,  r.col16,  r.col17 FROM ". TableReestrDistinct." r  
+          WHERE MATCH (col2,col5,col9, col10) AGAINST ('$filter' IN BOOLEAN MODE) ORDER BY $sidx $sord LIMIT $start , $limit"; //$start, $pagesize
+
+        $result = $this->get_data($query);
+        $responce->page = $page;
+        $responce->total = $total_pages;
+        $responce->records = $count;
+        $rows = array();
+        $i=0;
+        while($row = $result->fetch_assoc()) {
+            $responce->rows[$i]['id']=$row[col1];
+            $responce->rows[$i]['cell']=($row);
+            $i++;
+        }
+        echo json_encode($responce);
+    }
+
+    private function generateAgainstString($text) {
+        $responce=$this->stopWords($text);
+        $responce=explode(" ",$responce);
+        $responceFinish=array();
+        foreach ($responce as $value) {
+            $responceFinish[]="+".$this->dropBackWords($value)."*";
+        }
+        $responceFinish = implode(" ",$responceFinish);
+        return $responceFinish;
+    }
+
+}
+
 class model_search extends Search {
     public static $reestrFullArray;
     public static $hideColumn;
@@ -71,6 +139,22 @@ class model_search extends Search {
         $this->GenerateJson($ret);
         $this->close();
     }
+    
+    public function searchAllReestr() {
+        $this->initParams();
+        $this->connect();
+        $this->setJSONHead();
+        $sqlQuery=self::$reestrSQL;
+        $against=$this->generateAgainstString($_REQUEST['searchAll']);
+        $colSmartSearch=implode(", ",self::$smartSearch);
+//        print_r($colSmartSearch);
+        $whereAgainst=$this->addMatch($colSmartSearch,$against);
+        $sql = $sqlQuery.$whereAgainst;
+//        die ($sql);
+        $ret = $this->createDateArray($sql);
+        $ret=$this->GenerateJson($ret);
+//        print_r($ret);
+    }
 
     public function searchReestr() {
         $this->initParams();
@@ -87,6 +171,24 @@ class model_search extends Search {
         $ret=$this->CreateFindIndex($sqlQuery,$sqlWhere[smartfilter]);
         $this->GenerateJson($ret);
     }
+
+    private function generateAgainstString($text) {
+        $responce=$this->stopWords($text);
+        $responce=explode(" ",$responce);
+        $responceFinish=array();
+        foreach ($responce as $value) {
+            $responceFinish[]="+".$this->dropBackWords($value)."*";
+        }
+        return $responceFinish;
+    }
+
+    private function addMatch($colName,$arrAgainst) {
+        $s1=implode(" ",$arrAgainst);
+        $returnWhere=" WHERE MATCH ($colName) AGAINST ('$s1' IN BOOLEAN MODE)";
+        return $returnWhere;
+//        WHERE MATCH (rd.col5) AGAINST ('+упаковк* +плазменн* +стерилизац*' IN BOOLEAN MODE)
+    }
+
 
     /**
      * Generate Where Request for SQL Table
@@ -168,7 +270,19 @@ class model_search extends Search {
             // print_r($result[rows]);
         }
     }
-    
+
+    private function createDateArray($query) {
+        $result=$this->get_data($query);
+        $i=0;
+        $retResponce = (object) array();
+        while($row = $result->fetch_assoc()) {
+            $retResponce->rows[$i]['id'] = $row[col1];
+            $retResponce->rows[$i]['cell'] = ($row);
+            $i++;
+        }
+        return $retResponce;
+    }
+
     private function CreateFindIndex($sqlQuery,$filter,$oper=null) {
 //        $filter =array('col5'=>'мед отход');
         $filter=array_values($filter);

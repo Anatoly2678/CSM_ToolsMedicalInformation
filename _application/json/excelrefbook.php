@@ -13,6 +13,7 @@
         <th>Код</th>
         <th>Наименование</th>
         <th>Описание</th>
+        <th>Подгруппа</th>
     </tr>
     <?php
     while($row = $result->fetch_array()) {
@@ -24,6 +25,7 @@
 			<td>'.$row['col1'].'</td>
 			<td>'.$row['col3'].'</td>
 			<td>'.$row['col4'].'</td>
+			<td>'.$row['col3_first_word'].'</td>
 		</tr>
 		';
     }

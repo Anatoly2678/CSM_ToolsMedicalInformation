@@ -25,6 +25,19 @@ class Controller_dataupdate extends Controller {
         $this->model->close();
     }
 
+    /** Set shot MI values in SQL table
+    *
+    */
+    function action_setShotMIValues() {
+        $this->model->connect();
+        echo "Set shot MI Values in table"+"<br>";
+        $this->model->setShotMIValues();
+        echo "Set shot MI Values Completed.....";
+        // $this->model->MIreestrDistinct();
+        $this->model->close();
+    }
+
+
     function action_fastSearch() {
         $word="Аппарат для санации раневой поверхности";
         $word="Баллон наконечник упаковка";
@@ -65,6 +78,13 @@ class Controller_dataupdate extends Controller {
         // $this->model->TestMyAlgoritm();
         $this->model->connect();
         $this->model->GetMISimilar();
+        $this->model->close();
+    }
+
+    function action_mireestrTranslate() {
+        print_r("Translate<br>");
+        $this->model->connect();
+        $this->model->miReestrTransalte();
         $this->model->close();
     }
 

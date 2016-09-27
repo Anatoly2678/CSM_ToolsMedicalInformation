@@ -36,6 +36,7 @@
                                 </ul>
                             </div>
                         </li>
+                        <li id="m-handbooks"><a href="/handbooks">СПРАВОЧНИКИ</a></li>
                     </ul>
                 </div>
             </nav>

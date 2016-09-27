@@ -1,7 +1,7 @@
 <?php
 class Controller_exportroszdrav extends Controller {
 		function __construct() {
-		$this->model = new model_exportroszdrav();
+			$this->model = new model_exportroszdrav();
 	}
 
 	function action_miload() {
@@ -220,7 +220,9 @@ class Controller_exportroszdrav extends Controller {
 		$this->model->deleteDuplicate();
 		echo "таблица с уникальными записями успешно сохранена<br>";
 		$this->model->updatecol4_data();
-		echo "даты преобразованы";
+		echo "даты преобразованы<br>";
+		echo "Получаем короткие нименования МИ";
+		$this->model->setShotMIValues();
 		$this->model->close();
 	}
 

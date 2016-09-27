@@ -1,5 +1,5 @@
 <?php
-// error_reporting(E_ERROR | E_WARNING | E_PARSE); //
+error_reporting(E_ERROR); // 
 class Controller_refbook extends Controller {
     function __construct() {
     	$this->model = new model_refbook();

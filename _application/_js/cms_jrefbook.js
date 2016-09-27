@@ -25,7 +25,7 @@ $(document).ready(function () {
         filters: '{"groupOp":"AND","rules":[{"field":"'+filter+'","op":"eq","data":"' + filtervalue + '"}]}'
         },
         page: 1,
-        colNames:['Раздел','Подраздел','Код','Наименование','Описание','Перейти'],
+        colNames:['Раздел','Подраздел','Код','Наименование','Описание','Подгруппа','Схожесть','Схожесть2','Перейти'],
         colModel:[
             {name:'Section',index:'Section', align:'center', width:300, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}},
             {name:'SubSection',index:'SubSection', align:'center', width:300, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}},
@@ -33,6 +33,9 @@ $(document).ready(function () {
             {name:'col3',index:'col3', align:'center', width:300, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en'],
                 defaultSearch: 'cn'}},
             {name:'col4',index:'col4', align:'left', width:500, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}},
+            {name:'col3_first_word',index:'col3_first_word', align:'left', width:500, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}},
+            {name:'col3_soundex',index:'col3_soundex', align:'left', width:500, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}},            
+            {name:'col3_metaphone',index:'col3_metaphone', align:'left', width:500, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}},
             {name: 'ico', index:'ico', width: 100, align: 'center', formatter: imgFormat}
         ],
         rowNum:50,
@@ -65,6 +68,7 @@ $(document).ready(function () {
     $("#m-reestr").removeClass("active");
     $("#m-refbook").addClass("active");
     $("#m-report").removeClass("active");
+    $("#m-handbooks").removeClass("active");
     
     var jqgridheight=$(".ui-jqgrid").height();
     var myheight = document.body.clientHeight; //$("body").height();

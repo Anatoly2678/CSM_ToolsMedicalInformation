@@ -8,6 +8,20 @@ th.ui-th-column div{
 .ui-jqgrid tr.ui-row-ltr td div{ white-space:normal !important; }
 .ui-jqgrid tr.jqgrow td { white-space: normal !important; }
 .ui-widget-content td div { white-space: normal !important; }
+.ui-search-menu li a table { font-size: 11px; }
+.ui-menu-item:hover {
+    background-color: lightskyblue !important;
+}
+.ui-state-hover {
+    border: 0px !important;
+    color: brown !important;
+    text-decoration: none !important;
+}
+.ui-state-hover table {
+    color: brown !important;
+
+}
+.ui-jqdialog-content .DelTable, .ui-jqdialog-content .EditTable { font-size: 11px;}
 
 .ui-jqgrid-htable, .ui-jqgrid-btable, .ui-search-table, .ui-pg-table {
     font-size: 11px;

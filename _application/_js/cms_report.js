@@ -20,6 +20,7 @@ $(document).ready(function () {
     $("#m-reestr").removeClass("active");
     $("#m-refbook").removeClass("active");
     $("#m-report").addClass("active");
+    $("#m-handbooks").removeClass("active");
 })
 
 $(window).load(function() {

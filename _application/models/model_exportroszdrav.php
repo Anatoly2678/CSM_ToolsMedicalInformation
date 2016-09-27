@@ -5,6 +5,36 @@ class model_exportroszdrav extends roszdravParsing {
 	public function changeParseURL($url) {
 		parent::$parsURL=$url;
 	}
+
+	/** Set shot MI values in SQL table.
+	 * Read full MI values in SQL table, when
+	 * update shot MI values in other col table
+	 */
+	public function setShotMIValues() {
+		$sql="SELECT col1, col5, col5_shot FROM reestr_distinct WHERE col5_shot IS null or col5_shot =''";
+		$result = $this->get_data($sql);
+		while ($row = $result->fetch_assoc()) {
+			$resShot=addslashes($this->get10words($row[col5]));
+			$id=$row[col1];
+			$sqlU="UPDATE reestr_distinct SET col5_shot = '$resShot' WHERE col1='$id'";
+			$this->get_data($sqlU);
+		}
+	}
+
+	/** Cuts offer to 10 words
+	 * $txt - offer
+	 * $len - len cut (10 default)
+	 */
+	private function get10words($txt,$len=10) {
+		$txt = str_ireplace(array("\r","\n",'\r','\n'),' ', $txt);
+		$arr_str = explode(" ", $txt);
+		$arr = array_slice($arr_str, 0, $len);
+		$new_str = implode(" ", $arr);
+		if (count($arr_str) > $len) {
+			$new_str .= ' ......';
+		}
+		return $new_str;
+	}
 	
 	/** Get Date from URL POST Request (constant 'sitename' in function).
 	 * @param $params - POST parametrs from Array
@@ -81,7 +111,7 @@ class model_exportroszdrav extends roszdravParsing {
 	public function deleteDuplicate() {
 		$sql = "DELETE FROM reestr_distinct";
 		$this->query_data($sql);
-		$sql = "INSERT INTO reestr_distinct SELECT DISTINCT col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12, col13, col14, col15, col16, col17, now(),NULL,'Бессрочно' FROM reestr";
+		$sql = "INSERT INTO reestr_distinct SELECT DISTINCT col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12, col13, col14, col15, col16, col17, now(),NULL,'Бессрочно',NULL FROM reestr";
 		$this->query_data($sql);
 		return 0;
 	}

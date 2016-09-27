@@ -85,7 +85,7 @@ $(document).ready(function () {
                 $(el).datepick('option', {dateFormat: 'yyyy-mm-dd'});
     }
     }},
-            {name:'col5',index:'col5', align:'center', width:500, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']},formatter: Col5Shot,title:false, sortable:false},
+            {name:'col5',index:'col5', align:'center', width:500, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']},title:false, sortable:false}, // ,formatter: Col5Shot
             {name:'col6',index:'col6', align:'center', width:140, searchoptions:{sopt:['bw','cn','eq']}},
             {name:'col7',index:'col7', align:'center', width:140, searchoptions:{sopt:['bw','cn','eq']}},
             {name:'col8',index:'col8', align:'center', width:140, searchoptions:{sopt:['bw','cn','eq']}},
@@ -203,11 +203,13 @@ var allJQGridData = $(tableCtrl).jqGrid('getGridParam', 'data');
         $("#m-viewreestr").addClass("active");
         $("#m-refbook").removeClass("active");
         $("#m-report").removeClass("active");
+        $("#m-handbooks").removeClass("active");
     } else {
         $("#m-viewreestr").removeClass("active");
         $("#m-reestr").addClass("active");
         $("#m-refbook").removeClass("active");
         $("#m-report").removeClass("active");
+        $("#m-handbooks").removeClass("active");
     }
 
     autoHeightGrid(addminus);

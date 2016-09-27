@@ -19,7 +19,7 @@ $search = new Search();
         $_POST['searchString']=$_GET['searchString'];
         $_POST['type'] = $_GET['type'];
         $type = $_GET['type'];
-        $_search=true;
+        $_search='true';
         $f_name="";
         switch ($type) {
             case 'main':
@@ -35,7 +35,6 @@ $search = new Search();
                 break;
         }
     }
-
     $searchString ="";
     if($_search == 'true'){
         if (isset($_POST['filters'])) $filters = $_POST['filters'];// Фильтры для поиска
@@ -45,7 +44,10 @@ $search = new Search();
         $searchString = generateSearchString($filters, $searchField, $searchOper, $searchString);
         if ($searchString != '') {
             $searchString = "WHERE ".$searchString." ";
-            $searchString = str_replace("", "WHERE (`` = '')", $searchString);
+            $pos = strpos($searchString, "(`` = '')");
+            if ($pos) {
+                $searchString = "";
+            }
         }
     }
     if(!$sidx) $sidx =1;
@@ -68,6 +70,7 @@ $search = new Search();
             $query .=" FROM mi_reestr_section mrs";
             $query .=" INNER JOIN mi_section ms  ON mrs.col2_section=ms.id AND ms.ParentId=0 INNER JOIN mi_section ms1";
             $query .=" ON mrs.col2_section=ms1.ParentId AND mrs.col2_subsection= ms1.id ".$searchString;
+//            die($query);
             break;
         default :
             echo "Необходимо передать параметр TYPE";
@@ -95,7 +98,7 @@ $search = new Search();
             $searchString=str_replace("`Section`","CONCAT(mrs.col2_section,'. ', ms.SectionName)",$searchString);
             $searchString=str_replace("`SubSection`","CONCAT(mrs.col2_section,'.',mrs.col2_subsection,'. ',ms1.SectionName)",$searchString);
             $query="SELECT col1,col2,mrs.col2_section, CONCAT(mrs.col2_section,'. ', ms.SectionName) Section, mrs.col2_subsection,";
-            $query .=" CONCAT(mrs.col2_section,'.',mrs.col2_subsection,'. ',ms1.SectionName) SubSection, mrs.col3, mrs.col4  FROM mi_reestr_section mrs";
+            $query .=" CONCAT(mrs.col2_section,'.',mrs.col2_subsection,'. ',ms1.SectionName) SubSection, mrs.col3, mrs.col4,mrs.col3_first_word,mrs.col3_soundex, mrs.col3_metaphone  FROM mi_reestr_section mrs";
             $query .=" INNER JOIN mi_section ms  ON mrs.col2_section=ms.id AND ms.ParentId=0 INNER JOIN mi_section ms1";
             $query .=" ON mrs.col2_section=ms1.ParentId AND mrs.col2_subsection= ms1.id ".$searchString." ORDER BY $sidx $sord LIMIT $start , $limit";
             // die ($query);
@@ -120,9 +123,9 @@ $search = new Search();
                $searchString=str_replace("`SubSection`","CONCAT(mrs.col2_section,'.',mrs.col2_subsection,'. ',ms1.SectionName)",$searchString);
 
                 $query = "SELECT col1,col2,mrs.col2_section, CONCAT(mrs.col2_section,'. ', ms.SectionName) Section, mrs.col2_subsection,";
-                $query .= " CONCAT(mrs.col2_section,'.',mrs.col2_subsection,'. ',ms1.SectionName) SubSection, mrs.col3, mrs.col4  FROM mi_reestr_section mrs";
+                $query .= " CONCAT(mrs.col2_section,'.',mrs.col2_subsection,'. ',ms1.SectionName) SubSection, mrs.col3, mrs.col4,mrs.col3_first_word,mrs.col3_soundex, mrs.col3_metaphone  FROM mi_reestr_section mrs";
                 $query .= " INNER JOIN mi_section ms  ON mrs.col2_section=ms.id AND ms.ParentId=0 INNER JOIN mi_section ms1";
-                $query .= " ON mrs.col2_section=ms1.ParentId AND mrs.col2_subsection= ms1.id ".$searchString." ORDER BY $sidx $sord";
+                $query .= " ON mrs.col2_section=ms1.ParentId AND mrs.col2_subsection= ms1.id ".$searchString." AND mrs.col3_first_word is not NULL ORDER BY $sidx $sord";
                 if (!$result =$mysqli->query($query)) {
                     echo "Error GET record: " . $mysqli->error."<br>";
                     die ('Oooops');
