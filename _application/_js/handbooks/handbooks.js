@@ -6,3 +6,4 @@ $("#m-reestr").removeClass("active");
 $("#m-refbook").removeClass("active");
 $("#m-report").removeClass("active");
 $("#m-handbooks").addClass("active");
+$("#m-wordbymi").removeClass("active");

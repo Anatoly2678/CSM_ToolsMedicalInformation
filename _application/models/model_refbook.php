@@ -85,7 +85,6 @@ class Model_refbook extends Model {
         $this->close();
     }
 
-
     private function countTheNumberOfIdenticalWords ($str) {
         $str=str_replace("/", " ", $str);
         $str=str_replace("(", "", $str);
@@ -125,7 +124,6 @@ class Model_refbook extends Model {
         return $word;
     }
 
-
     /** Делаем анализ только по осноным разделам номенклатуры
     *
     */
@@ -163,8 +161,8 @@ class Model_refbook extends Model {
         foreach ($arrOut as $key=>$value) {
 //            $ofWords = mb_strtoupper($value, 'UTF-8');
             $r2=$r1->str2url($value);
-//            $r2s=soundex($r2);
-            $r2s=metaphone($r2,5);
+            $r2s=soundex($r2);
+//            $r2s=metaphone($r2,5);
             $query="INSERT INTO dtable (rus_name,trans_name,soundex_name ) VALUES('$value' ,'$r2','$r2s');";
             $this->query_data($query);
 //            print_r($value." - ". $r2." - ". soundex($r2));
@@ -267,21 +265,18 @@ class Model_refbook extends Model {
         // print_r($words);
     }
 
-
-
-
-
-    // public function get_data($where=null) {
-    //     $this->connect();
-    //     $query="SELECT DISTINCT col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12, col13, col14, col15, col16, col17, data_record FROM reestr";        
-    //    if ($result =parent::$mysqliPublic->query($query, MYSQLI_USE_RESULT)) {
-    //         while($row = $result->fetch_array(MYSQL_ASSOC)) {
-    //             $myArray[] = $row;	
-    //         }
-    //         $myArray = json_encode($myArray);
-    //         return ($myArray);
-	   // }
-    // }
+    public function get_data()
+    {
+        $dth= $this->connectPDO();
+        $sql="SELECT mrs.col2_section, mrs.col1, CONCAT(mrs.col2_section,'. ', ms.SectionName) Section, CONCAT(mrs.col2_section,'.',mrs.col2_subsection,'. ',ms1.SectionName) SubSection, 
+          mrs.col3, mrs.col4  
+          FROM mi_reestr_section mrs 
+          INNER JOIN mi_section ms  ON mrs.col2_section=ms.id AND ms.ParentId=0 
+          INNER JOIN mi_section ms1 ON mrs.col2_section=ms1.ParentId AND mrs.col2_subsection= ms1.id"; // LIMIT 10
+        $result=$this->getAllRecinArray($sql);
+        $dth=NULL;
+        return $result;
+    }
 }
 
 class Lingua_Stem_Ru

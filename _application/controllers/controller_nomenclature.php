@@ -22,5 +22,9 @@ class Controller_nomenclature extends Controller {
 //        $this->model->MIreestrDistinct();
 //        $this->model->close();
     }
+    
+    function action_findSubSection() {
+        $this->model->findSubSection();
+    }
 }
 ?>

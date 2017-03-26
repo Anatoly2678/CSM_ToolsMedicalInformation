@@ -1,4 +1,4 @@
-﻿/* http://keith-wood.name/datepick.html
+/* http://keith-wood.name/datepick.html
    Datepicker extensions for jQuery v5.0.1.
    Written by Keith Wood (kbwood{at}iinet.com.au) August 2009.
    Licensed under the MIT (http://keith-wood.name/licence.html) licence. 

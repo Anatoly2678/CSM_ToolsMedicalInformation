@@ -1,4 +1,4 @@
-﻿/* http://keith-wood.name/datepick.html
+/* http://keith-wood.name/datepick.html
    Tatar localisation for jQuery Datepicker.
    Written by Irek Khaziev (khazirek@gmail.com). */
 (function($) {

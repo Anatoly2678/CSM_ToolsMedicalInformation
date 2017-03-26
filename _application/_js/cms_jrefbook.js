@@ -15,37 +15,50 @@ function FilterResult () {
     return res;
 }
 
+function mysum(val, name, record) {
+    return record.Section; // parseFloat(val||0) + parseFloat((record[name]||0));
+}
+
 $(document).ready(function () {
     jQuery("#jqRefBook").jqGrid({
         url:'/_application/json/jqList.php',
+        url:'/refbook/json',
         datatype: "json",
+        cache: true,
         mtype: "POST",
         search: FilterResult(),
         postData: {type: 'refbook',
         filters: '{"groupOp":"AND","rules":[{"field":"'+filter+'","op":"eq","data":"' + filtervalue + '"}]}'
         },
         page: 1,
-        colNames:['Раздел','Подраздел','Код','Наименование','Описание','Подгруппа','Схожесть','Схожесть2','Перейти'],
+        colNames:['#Раздел','Раздел','Подраздел','Код','Наименование','Описание','Перейти'], // ,'Подгруппа','Схожесть','Схожесть2'
         colModel:[
-            {name:'Section',index:'Section', align:'center', width:300, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}},
+
+            {name:'col2_section',index:'col2_section', align:'center', width:300, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}},
+            {name:'Section',index:'Section', align:'center', width:300, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}
+                ,summaryType:mysum
+                , summaryTpl : '({0}) total'
+            },
             {name:'SubSection',index:'SubSection', align:'center', width:300, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}},
             {name:'col1',index:'col1', align:'center', width:100, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}, formatter:"integer",sorttype:"int"},
             {name:'col3',index:'col3', align:'center', width:300, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en'],
                 defaultSearch: 'cn'}},
             {name:'col4',index:'col4', align:'left', width:500, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}},
-            {name:'col3_first_word',index:'col3_first_word', align:'left', width:500, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}},
-            {name:'col3_soundex',index:'col3_soundex', align:'left', width:500, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}},            
-            {name:'col3_metaphone',index:'col3_metaphone', align:'left', width:500, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}},
+            // {name:'col3_first_word',index:'col3_first_word', align:'left', width:500, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}},
+            // {name:'col3_soundex',index:'col3_soundex', align:'left', width:500, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}},
+            // {name:'col3_metaphone',index:'col3_metaphone', align:'left', width:500, searchoptions:{sopt:['cn','eq','bw','bn','nc','ew','en']}},
             {name: 'ico', index:'ico', width: 100, align: 'center', formatter: imgFormat}
         ],
-        rowNum:50,
+        rowNum:29000,
         caption: 'НОМЕНКЛАТУРНАЯ КЛАССИФИКАЦИЯ МЕДИЦИНСКИХ ИЗДЕЛИЙ ПО ВИДАМ',
-        rowList:[20,50,100,200],
+        // rowList:[5000,10000,20000,40000],
+        // scroll: true,
         pager: '#pgRefBook',
         sortname: 'col1',
         viewrecords: true,
         sortorder: "asc",
-        loadonce: false,
+        // loadonce: false,
+        loadonce: true,
         scroll: 0,
         width: "99%",
         height: '600px',
@@ -54,6 +67,16 @@ $(document).ready(function () {
         // shrinkToFit: false,
         // forceFit: true,
         ignoreCase: true,
+        grouping:true,
+        groupingView : {
+            groupField : ['col2_section','SubSection'],
+            groupColumnShow : [false,true],
+            groupText : ['<b>{Section} - Всего значений в разделе (включая подразделы): {1} </b>','<b>{0} - Всего значений в подразделе: {1} </b>'],
+            groupCollapse : true,
+            groupOrder: ['asc', 'asc'],
+            groupSummary : [false, false],
+            groupDataSorted : true
+        },
     });
     jQuery("#jqRefBook").jqGrid('navGrid','#pgRefBook',{edit:false,add:false,del:false,search:false});
     jQuery("#jqRefBook").jqGrid('filterToolbar',{searchOperators : true,autoSearch: false,searchOnEnter : true});
@@ -69,6 +92,7 @@ $(document).ready(function () {
     $("#m-refbook").addClass("active");
     $("#m-report").removeClass("active");
     $("#m-handbooks").removeClass("active");
+    $("#m-wordbymi").removeClass("active");
     
     var jqgridheight=$(".ui-jqgrid").height();
     var myheight = document.body.clientHeight; //$("body").height();

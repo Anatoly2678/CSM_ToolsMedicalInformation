@@ -29,9 +29,13 @@ class Controller_refbook extends Controller {
 	function action_readUnique() {
   		header("Content-type: text/html;charset=utf-8");
       $this->model->getMainSectionNomenclature();
-      // $this->model->getSquareWord();
+	}
 
-  		// echo "Not Using";
+	function action_json()
+	{
+		$this->model->setJSONHead();
+		$result=$this->model->get_data();
+		echo json_encode($result);
 	}
 
 }

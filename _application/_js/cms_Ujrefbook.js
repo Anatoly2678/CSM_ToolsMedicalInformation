@@ -65,6 +65,7 @@ $(document).ready(function () {
     $("#m-reestr").removeClass("active");
     $("#m-refbook").addClass("active");
     $("#m-report").removeClass("active");
+    $("#m-wordbymi").removeClass("active");
     
     var jqgridheight=$(".ui-jqgrid").height();
     var myheight = document.body.clientHeight; //$("body").height();

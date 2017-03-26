@@ -25,6 +25,6 @@ jQuery("#grdSynonyms").jqGrid({
     forceFit: true,
     ignoreCase: true
 });
-jQuery("#grdSynonyms").jqGrid('navGrid','#pgSynonyms',{edit:false,add:false,del:true,search:false});
+jQuery("#grdSynonyms").jqGrid('navGrid','#pgSynonyms',{edit:false,add:false,del:false,search:false});
 jQuery("#grdSynonyms").jqGrid('filterToolbar',{searchOperators : true,autoSearch: false,searchOnEnter : true});
 // jQuery("#grdSynonyms").trigger("reloadGrid");

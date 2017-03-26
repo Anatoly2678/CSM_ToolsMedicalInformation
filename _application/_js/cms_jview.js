@@ -204,12 +204,14 @@ var allJQGridData = $(tableCtrl).jqGrid('getGridParam', 'data');
         $("#m-refbook").removeClass("active");
         $("#m-report").removeClass("active");
         $("#m-handbooks").removeClass("active");
+        $("#m-wordbymi").removeClass("active");
     } else {
         $("#m-viewreestr").removeClass("active");
         $("#m-reestr").addClass("active");
         $("#m-refbook").removeClass("active");
         $("#m-report").removeClass("active");
         $("#m-handbooks").removeClass("active");
+        $("#m-wordbymi").removeClass("active");
     }
 
     autoHeightGrid(addminus);

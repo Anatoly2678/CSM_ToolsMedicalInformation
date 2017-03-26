@@ -33,6 +33,58 @@ class model_nomenclature extends Search {
         $this->get_data($sql);
     }
 
+    public function findSubSection() {
+        $query="SELECT id, `code subrazdel`, `code razdel`, razdel, subrazdel, `over razdel`, `over subrazdel`, `find subrazdel` FROM TMITable"; // WHERE `find subrazdel` IS NULL
+        if ($result = $this->get_data($query)) {
+            while($row = $result->fetch_assoc()) {
+                $key_word=explode(";",str_replace(" ","",$row["code subrazdel"]));
+                $key_word2=explode(";",str_replace(" ","",$row["subrazdel"]));
+                $find=0;
+                foreach ($key_word as $word) {
+                    if (in_array($word, $key_word2)) {
+                        $find=1;
+                    }
+                }
+                    $sql="UPDATE TMITable SET `find subrazdel` = $find WHERE id = $row[id]";
+                    $this->get_data($sql);
+
+                $key1_word=explode(";",str_replace(" ","",$row["code razdel"]));
+                $key1_word2=explode(";",str_replace(" ","",$row["razdel"]));
+                $find1=0;
+                foreach ($key1_word as $word1) {
+                    if (in_array($word1, $key1_word2)) {
+                        $find1=1;
+                    }
+                }
+                $sql="UPDATE TMITable SET `find razdel` = $find1 WHERE id = $row[id]";
+                $this->get_data($sql);
+
+                $key2_word=$row["code razdel"];
+                $key2_word2=$row["razdel"];
+                $find2=0;
+                    if ($key2_word == $key2_word2) { $find2=1; }
+                $sql="UPDATE TMITable SET `over razdel` = $find2 WHERE id = $row[id]";
+                $this->get_data($sql);
+
+                $key2_word=$row["code subrazdel"];
+                $key2_word2=$row["subrazdel"];
+                $find2=0;
+                if ($key2_word == $key2_word2) { $find2=1; }
+                $sql="UPDATE TMITable SET `over subrazdel` = $find2 WHERE id = $row[id]";
+                $this->get_data($sql);
+
+
+                print_r($key_word2);
+                print_r($key_word);
+                echo "<hr>";
+                print_r($key1_word2);
+                print_r($key1_word);
+                print_r("<br><br>");
+//                $this->getNomenclatureByKeywords($key_word);
+            }
+        }
+    }
+
     /** Get Count by Group
      *
      * SELECT mrsg.group1_word, COUNT(*) counterRecord FROM mi_reestr_section mrs

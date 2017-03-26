@@ -2,6 +2,8 @@
 include "../cfg/connectConfig.php";
 require_once '../core/model.php';
 require_once '../core/search.php';
+error_reporting(E_ERROR);
+
 $search = new Search();
 
     header("Content-type: text/json;charset=utf-8");
@@ -98,10 +100,10 @@ $search = new Search();
             $searchString=str_replace("`Section`","CONCAT(mrs.col2_section,'. ', ms.SectionName)",$searchString);
             $searchString=str_replace("`SubSection`","CONCAT(mrs.col2_section,'.',mrs.col2_subsection,'. ',ms1.SectionName)",$searchString);
             $query="SELECT col1,col2,mrs.col2_section, CONCAT(mrs.col2_section,'. ', ms.SectionName) Section, mrs.col2_subsection,";
-            $query .=" CONCAT(mrs.col2_section,'.',mrs.col2_subsection,'. ',ms1.SectionName) SubSection, mrs.col3, mrs.col4,mrs.col3_first_word,mrs.col3_soundex, mrs.col3_metaphone  FROM mi_reestr_section mrs";
+            $query .=" CONCAT(mrs.col2_section,'.',mrs.col2_subsection,'. ',ms1.SectionName) SubSection, mrs.col3, '' col4  FROM mi_reestr_section mrs"; // mrs.col4
             $query .=" INNER JOIN mi_section ms  ON mrs.col2_section=ms.id AND ms.ParentId=0 INNER JOIN mi_section ms1";
-            $query .=" ON mrs.col2_section=ms1.ParentId AND mrs.col2_subsection= ms1.id ".$searchString." ORDER BY $sidx $sord LIMIT $start , $limit";
-            // die ($query);
+            $query .=" ON mrs.col2_section=ms1.ParentId AND mrs.col2_subsection= ms1.id ".$searchString.""; // ORDER BY $sidx $sord LIMIT $start , $limit
+//             die ($query);
             break;
         default :
             echo "Необходимо передать параметр TYPE";

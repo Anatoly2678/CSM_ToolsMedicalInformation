@@ -25,6 +25,15 @@ class Controller_handbooks extends Controller {
     function action_synonyms() {
         $this->model->getSynonyms();   
     }
+    
+    function action_miunuque() {
+        $this->model->getMIUnique();
+    }
+
+    function action_miunuqueupdate() {
+        $this->model->updateMIUnique();
+//        var_dump('update');
+    }
 
 //	function action_filter() {
 //		$this->view->generate('listReestr.php', 'cms_template.php',$_GET); //

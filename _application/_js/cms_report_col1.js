@@ -9,7 +9,7 @@ function imgFormat(id, options, rowObject){
     return href;
 }
 
-col="1"
+col="1";
 jQuery("#jqReportcol"+col).jqGrid({
     url:'/json',
     mtype: "POST",

@@ -25,5 +25,5 @@ jQuery("#grdWords").jqGrid({
     forceFit: true,
     ignoreCase: true
 });
-jQuery("#grdWords").jqGrid('navGrid','#pgWords',{edit:false,add:false,del:true,search:false});
+jQuery("#grdWords").jqGrid('navGrid','#pgWords',{edit:false,add:false,del:false,search:false});
 jQuery("#grdWords").jqGrid('filterToolbar',{searchOperators : true,autoSearch: false,searchOnEnter : true});

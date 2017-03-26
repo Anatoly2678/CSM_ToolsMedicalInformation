@@ -1,4 +1,4 @@
-﻿function getDemoTheme() {
+function getDemoTheme() {
     var theme = document.body ? $.data(document.body, 'theme') : null
     if (theme == null) {
         theme = '';

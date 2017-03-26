@@ -21,6 +21,7 @@ $(document).ready(function () {
     $("#m-refbook").removeClass("active");
     $("#m-report").addClass("active");
     $("#m-handbooks").removeClass("active");
+    $("#m-wordbymi").removeClass("active");
 })
 
 $(window).load(function() {

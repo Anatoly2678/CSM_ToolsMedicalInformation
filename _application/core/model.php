@@ -1,5 +1,5 @@
 <?php
-class Model
+class Model extends  stdObject
 {
 	public static $mysqliPublic;
 	public static $start;
@@ -11,6 +11,49 @@ class Model
 	public static $_search;// — Булево значение, если запрос с условием поиска оно принимает истинное значение;
 	public static $count;
 	public static $total_pages;
+
+	public static $DBHConnect;
+
+	public function connectPDO() {
+		try {
+			$DBH = new PDO("mysql:host=".Host.";dbname=".DB, User, Password);
+			$DBH -> exec("set names utf8");
+//			$DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			self::$DBHConnect = $DBH;
+			return $DBH;
+		} catch(PDOException $e) {
+			die('Подключение не удалось: ' . $e->getMessage());
+		}
+	}
+
+	public function getAllRecinArray($query) {
+		try {
+			$members=self::$DBHConnect->query($query)->fetchColumn();
+			if ($members) {
+				$data = self::$DBHConnect->query($query)->fetchAll(PDO::FETCH_ASSOC);
+				return $data;
+			} else {
+				return null;
+			}
+		} catch (Exception $e) {
+			die('Выполнить запрос не удалось: ' . $e->getMessage());
+		}
+	}
+
+	public function getRecinKeyValue($query) {
+		try {
+			$members=self::$DBHConnect->query($query)->fetchColumn();
+			if ($members) {
+				$data = self::$DBHConnect->query($query)->fetchAll(PDO::FETCH_KEY_PAIR);//(PDO::FETCH_UNIQUE);
+				return $data;
+			} else {
+				return null;
+			}
+		} catch (Exception $e) {
+			die('Выполнить запрос не удалось: ' . $e->getMessage());
+		}
+	}
+	
 	/*
 		Модель обычно включает методы выборки данных, это могут быть:
 			> методы нативных библиотек pgsql или mysql;
@@ -18,13 +61,23 @@ class Model
 			> методы ORM;
 			> методы для работы с NoSQL;
 			> и др.
-	*/
+	*/	
 	public function connect() {
 		$mysqli = new mysqli(Host, User, Password, DB);
 		if (mysqli_connect_errno()) { echo "Подключение невозможно: ".mysqli_connect_error(); }
 		self::$mysqliPublic=$mysqli;
 		return self::$mysqliPublic;
 	}
+	
+//	public function connectPDO() {
+//		try {
+//			$DBH = new PDO("mysql:host=".Host.";dbname=".DB, User, Password);
+//			return $DBH;
+//		}
+//		catch(PDOException $e) {
+//			echo $e->getMessage();
+//		}
+//	}
 
 	public function close() {
 		self::$mysqliPublic->close();	
@@ -339,4 +392,42 @@ print_r($string);
 		return $result;
 	}
 
+	public function translitIt($str) {
+		$tr = array(
+			"А"=>"A","Б"=>"B","В"=>"V","Г"=>"G",
+			"Д"=>"D","Е"=>"E","Ж"=>"J","З"=>"Z","И"=>"I",
+			"Й"=>"Y","К"=>"K","Л"=>"L","М"=>"M","Н"=>"N",
+			"О"=>"O","П"=>"P","Р"=>"R","С"=>"S","Т"=>"T",
+			"У"=>"U","Ф"=>"F","Х"=>"H","Ц"=>"TS","Ч"=>"CH",
+			"Ш"=>"SH","Щ"=>"SCH","Ъ"=>"","Ы"=>"YI","Ь"=>"",
+			"Э"=>"E","Ю"=>"YU","Я"=>"YA","а"=>"a","б"=>"b",
+			"в"=>"v","г"=>"g","д"=>"d","е"=>"e","ж"=>"j",
+			"з"=>"z","и"=>"i","й"=>"y","к"=>"k","л"=>"l",
+			"м"=>"m","н"=>"n","о"=>"o","п"=>"p","р"=>"r",
+			"с"=>"s","т"=>"t","у"=>"u","ф"=>"f","х"=>"h",
+			"ц"=>"ts","ч"=>"ch","ш"=>"sh","щ"=>"sch","ъ"=>"y",
+			"ы"=>"yi","ь"=>"'","э"=>"e","ю"=>"yu","я"=>"ya"
+		);
+		return strtr($str,$tr);
+	}
+
+}
+
+class stdObject {
+	public function __construct(array $arguments = array()) {
+		if (!empty($arguments)) {
+			foreach ($arguments as $property => $argument) {
+				$this->{$property} = $argument;
+			}
+		}
+	}
+
+	public function __call($method, $arguments) {
+		$arguments = array_merge(array("stdObject" => $this), $arguments); // Note: method argument 0 will always referred to the main class ($this).
+		if (isset($this->{$method}) && is_callable($this->{$method})) {
+			return call_user_func_array($this->{$method}, $arguments);
+		} else {
+			throw new Exception("Fatal error: Call to undefined method stdObject::{$method}()");
+		}
+	}
 }

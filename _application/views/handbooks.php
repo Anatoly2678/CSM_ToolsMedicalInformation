@@ -1,11 +1,12 @@
 <div class="row">
     <div class="col-md-12">
         <ul class="nav nav-tabs">
-            <li><a href="#words" data-toggle="tab">Слова</a></li>
-            <li class="active"><a href="#synonyms" data-toggle="tab">Синонимы</a></li>
-            <li><a href="#endof" data-toggle="tab">Окончания</a></li>
-            <li><a href="#stopwords" data-toggle="tab">СТОП-слова</a></li>
-            <li><a href="#country" data-toggle="tab">Страны?!</a></li>
+<!--            <li><a href="#words" data-toggle="tab">Слова</a></li>-->
+            <li class="active"> <a href="#miUnique" data-toggle="tab">Слова</a></li>
+            <li ><a href="#synonyms" data-toggle="tab">Синонимы</a></li>
+            <!-- Убрать ! из тэгов -->
+            <li class="disabled"><a href="#endof!" data-toggle="tab" >Окончания</a></li>
+            <li class="disabled"><a href="#stopwords!" data-toggle="tab">СТОП-слова</a></li>
         </ul>
 
         <div class="tab-content">
@@ -15,7 +16,7 @@
                     <div id="pgWords"></div>
                 </div>
             </div>
-            <div class="tab-pane active fade in" id="synonyms">
+            <div class="tab-pane fade" id="synonyms">
                 <div class="row" style="padding: 10px 0;">
                     <div class="col-md-3">
                         <div class="form-group ">
@@ -80,16 +81,20 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="country">
-                <p>
-                    Пока не понимаю, чем отличается от синонимов!?
-                </p>
+            <div class="tab-pane active fade in" id="miUnique">
+                <div class="row" style="padding: 10px 0;">
+                    <div class="col-md-12">
+                        <table id="grdMIUnique"></table>
+                        <div id="pgMIUnique"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript" src="/_application/_js/handbooks/handbooks.js"></script>
 <script type="text/javascript" src="/_application/_js/handbooks/words.js"></script>
+<script type="text/javascript" src="/_application/_js/handbooks/miunique.js"></script>
 <script type="text/javascript" src="/_application/_js/handbooks/synonyms.js"></script>
 <script type="text/javascript" src="/_application/_js/handbooks/endof.js"></script>
 <script type="text/javascript" src="/_application/_js/handbooks/stopwords.js"></script>

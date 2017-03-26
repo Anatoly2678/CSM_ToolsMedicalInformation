@@ -26,6 +26,7 @@
                         <li id="m-viewreestr"><a href="/viewreestr">ГОС РЕЕСТР МИ</a></li>
                         <li id="m-refbook"><a href="/refbook">НОМЕНКЛАТУРА МИ ПО ВИДАМ</a></li>
                         <li id="m-report"><a href="/report">ОТЧЕТЫ</a></li>
+                        <li id="m-wordbymi"><a href="/wordbymi">СЛОВА в МИ</a></li>
                         <li id="m-remove-col" style="display: none">
                             <div class="btn-group" style="margin-top: 5px">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

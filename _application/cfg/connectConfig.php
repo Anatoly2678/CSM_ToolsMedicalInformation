@@ -7,4 +7,6 @@ define('DB', 'csm'); //centrutil_csm
 define('TableReestr', 'reestr');
 define('TableReestrDistinct', 'reestr_distinct');
 define('TableMi','mi_reestr');
+define('Morpheme','morpheme');
+define('MIReestr','miReestrCountDictionary'); //МИ, сколько слов из словаря совпало!
 ?>
